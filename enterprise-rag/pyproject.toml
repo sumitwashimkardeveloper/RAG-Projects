@@ -1,0 +1,129 @@
+[build-system]
+requires = ["setuptools>=68.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "enterprise-rag"
+version = "0.1.0"
+description = "Enterprise Knowledge RAG - Retrieval Augmented Generation for multi-source knowledge bases"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [
+    {name = "Enterprise RAG Team"}
+]
+license = {text = "MIT"}
+keywords = ["rag", "retrieval", "llm", "knowledge-base", "enterprise"]
+
+dependencies = [
+    # Core Framework
+    "fastapi==0.104.1",
+    "uvicorn[standard]==0.24.0",
+    "pydantic==2.5.0",
+    "pydantic-settings==2.1.0",
+
+    # LLM & RAG Framework
+    "langchain==0.1.0",
+    "langchain-openai==0.0.6",
+    "langchain-community==0.0.10",
+    "llama-index==0.9.31",
+    "llama-index-embeddings-openai==0.1.7",
+
+    # Vector Databases
+    "pinecone-client==3.0.2",
+    "weaviate-client==4.1.1",
+
+    # Document Processing
+    "PyPDF2==3.0.1",
+    "python-docx==0.8.11",
+    "python-pptx==0.6.21",
+    "openpyxl==3.11.0",
+    "pandas==2.1.3",
+
+    # API Connectors
+    "requests==2.31.0",
+    "atlassian-python-api==3.41.0",
+    "notion-client==2.2.1",
+    "google-api-python-client==2.105.0",
+    "google-auth==2.25.2",
+
+    # Database
+    "sqlalchemy==2.0.23",
+    "psycopg2-binary==2.9.9",
+    "alembic==1.13.1",
+
+    # Caching & Queuing
+    "redis==5.0.1",
+    "celery==5.3.4",
+
+    # Async & Concurrency
+    "aiohttp==3.9.1",
+
+    # Authentication & Security
+    "python-jose==3.3.0",
+    "passlib==1.7.4",
+    "python-multipart==0.0.6",
+    "PyJWT==2.8.1",
+
+    # Logging & Monitoring
+    "python-json-logger==2.0.7",
+    "prometheus-client==0.19.0",
+    "structlog==23.3.0",
+
+    # Utilities
+    "python-dotenv==1.0.0",
+    "pytz==2023.3",
+
+    # Data Validation
+    "marshmallow==3.20.1",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest==7.4.3",
+    "pytest-asyncio==0.21.1",
+    "pytest-cov==4.1.0",
+    "black==23.12.0",
+    "ruff==0.1.8",
+    "mypy==1.7.1",
+    "httpx==0.25.2",
+]
+
+ml = [
+    "sentence-transformers==2.2.2",
+    "torch==2.1.1",
+]
+
+[project.urls]
+Homepage = "https://github.com/yourorg/enterprise-rag"
+Documentation = "https://docs.enterprise-rag.com"
+Repository = "https://github.com/yourorg/enterprise-rag"
+"Bug Tracker" = "https://github.com/yourorg/enterprise-rag/issues"
+
+[tool.setuptools]
+packages = ["app"]
+
+[tool.black]
+line-length = 100
+target-version = ["py310", "py311"]
+include = '\.pyi?$'
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+select = ["E", "F", "W", "I"]
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+addopts = "-ra -q --strict-markers"
+testpaths = ["tests"]
+markers = [
+    "unit: unit tests",
+    "integration: integration tests",
+    "slow: slow tests",
+]
