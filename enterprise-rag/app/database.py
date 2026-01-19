@@ -13,6 +13,9 @@ logger = logging.getLogger(__name__)
 # SQLAlchemy Base for ORM models
 Base = declarative_base()
 
+# Import models to register them with Base
+from app.models import DataSource, Document, DocumentChunk, SyncLog, IngestionMetrics
+
 # Async engine instance
 engine = None
 async_session_maker = None
