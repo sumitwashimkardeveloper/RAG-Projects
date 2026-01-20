@@ -11,7 +11,7 @@ from fastapi.responses import JSONResponse
 from app.config import settings
 from app.database import init_db, close_db
 from app.logging_config import setup_logging
-from app.api import ingestion_router
+from app.api import ingestion_router, processing_router, batch_router
 
 # Setup logging
 setup_logging()
@@ -57,6 +57,8 @@ app.add_middleware(
 
 # Include routers
 app.include_router(ingestion_router)
+app.include_router(processing_router)
+app.include_router(batch_router)
 
 
 # Health check endpoint
