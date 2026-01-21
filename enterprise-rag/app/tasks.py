@@ -249,7 +249,35 @@ def setup_periodic_tasks(sender, **kwargs):
     )
 
 
+@celery_app.task(bind=True, name="embed_chunks")
+def embed_chunks_task(self, chunk_ids: list, batch_size: int = 100):
+    try:
+        from app.embeddings import EmbeddingService, OpenAIEmbeddingProvider, PineconeVectorStore
+        import asyncio
+
+        async def embed():
+            session = get_async_session()
+            try:
+                provider = OpenAIEmbeddingProvider()
+                vector_store = PineconeVectorStore()
+
+                if not vector_store.connect():
+                    raise Exception("Vector store connection failed")
+
+                service = EmbeddingService(session, provider, vector_store)
+                result = await service.embed_chunks_batch(chunk_ids, batch_size=batch_size)
+                return result
+            finally:
+                await session.close()
+
+        result = asyncio.run(embed())
+        successful = sum(1 for v in result.values() if v)
+        return {"status": "success", "successful": successful, "total": len(result)}
+    except Exception as e:
+        logger.error(f"Embedding task error: {str(e)}")
+        raise
+
+
 @celery_app.task(bind=True, name="health_check")
 def health_check_task(self):
-    """Simple health check task"""
     return {"status": "healthy", "timestamp": str(datetime.utcnow())}
