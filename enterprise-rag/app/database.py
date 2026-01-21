@@ -16,6 +16,7 @@ Base = declarative_base()
 # Import models to register them with Base
 from app.models import DataSource, Document, DocumentChunk, SyncLog, IngestionMetrics
 from app.embeddings.models import Embedding, EmbeddingCache
+from app.llm.models import QueryResponse, PromptTemplate, ResponseFeedback
 
 # Async engine instance
 engine = None

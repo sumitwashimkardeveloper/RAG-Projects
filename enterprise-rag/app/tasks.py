@@ -278,6 +278,40 @@ def embed_chunks_task(self, chunk_ids: list, batch_size: int = 100):
         raise
 
 
+@celery_app.task(bind=True, name="answer_question")
+def answer_question_task(self, question: str, top_k: int = 10, use_context: bool = True):
+    try:
+        from app.llm import LLMService, OpenAILLMProvider
+        from app.retrieval import HybridRetriever
+        from app.embeddings import EmbeddingService, PineconeVectorStore
+        import asyncio
+
+        async def answer():
+            session = get_async_session()
+            try:
+                llm = OpenAILLMProvider()
+
+                retriever = None
+                if use_context:
+                    provider = OpenAILLMProvider()
+                    vector_store = PineconeVectorStore()
+                    if vector_store.connect():
+                        embedding_service = EmbeddingService(session, provider, vector_store)
+                        retriever = HybridRetriever(session, embedding_service)
+
+                service = LLMService(session, llm, retriever)
+                result = await service.answer_question(question, top_k=top_k, use_context=use_context)
+                return result
+            finally:
+                await session.close()
+
+        result = asyncio.run(answer())
+        return result
+    except Exception as e:
+        logger.error(f"Question answering task error: {str(e)}")
+        raise
+
+
 @celery_app.task(bind=True, name="health_check")
 def health_check_task(self):
     return {"status": "healthy", "timestamp": str(datetime.utcnow())}
