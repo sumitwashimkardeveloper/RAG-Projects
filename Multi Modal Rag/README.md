@@ -214,6 +214,3 @@ The `utils.py` module provides:
 
 MIT License
 
-## Support
-
-For issues and questions, check the documentation or submit issues on the project repository.
