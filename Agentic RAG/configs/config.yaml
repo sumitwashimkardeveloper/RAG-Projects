@@ -1,0 +1,59 @@
+llm:
+  provider: anthropic
+  model: claude-3-5-sonnet-20241022
+  temperature: 0.7
+  max_tokens: 4096
+  timeout: 30
+
+vector_db:
+  provider: pinecone
+  index_name: agentic-rag
+  dimension: 1536
+  metric: cosine
+
+retriever:
+  top_k: 5
+  score_threshold: 0.5
+  hybrid_search: true
+  bm25_weight: 0.3
+  semantic_weight: 0.7
+
+planner:
+  max_sub_queries: 5
+  enable_intent_classification: true
+
+critic:
+  confidence_threshold: 0.6
+  gap_detection_enabled: true
+  max_feedback_iterations: 3
+
+query_rewriter:
+  enable_expansion: true
+  enable_reformulation: true
+  max_reformulations: 3
+
+answer_generator:
+  include_citations: true
+  max_source_count: 5
+  response_length: medium
+
+loop:
+  max_iterations: 5
+  iteration_timeout: 60
+  early_stopping: true
+
+logging:
+  level: INFO
+  format: json
+  file: logs/agentic_rag.log
+
+api:
+  host: 0.0.0.0
+  port: 8000
+  debug: false
+  workers: 4
+
+paths:
+  data_dir: data
+  logs_dir: logs
+  cache_dir: cache

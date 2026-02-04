@@ -12,7 +12,7 @@
 
 ---
 
-### Phase 2: Vector Store & Data Infrastructure
+### Phase 2: Vecto Store & Data Infrastructure
 **Objective:** Build data pipeline and retrieval foundation
 - Choose and set up vector database (Pinecone, Weaviate, Milvus, etc.)
 - Implement document loader (PDF, text, web scrapers)
