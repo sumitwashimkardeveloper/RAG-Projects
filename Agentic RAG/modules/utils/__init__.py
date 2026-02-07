@@ -13,6 +13,9 @@ from .vector_store import (
 from .indexing import IndexingPipeline, IndexingResult
 from .database import DatabaseManager, get_database_manager
 from .query_helpers import QueryHelper
+from .state_machine import StateMachine, PipelinePhase, StateTransition
+from .iteration_controller import IterationController, IterationMetrics
+from .result_accumulator import ResultAccumulator, AccumulatedResult
 
 __all__ = [
     "get_logger",
@@ -39,4 +42,11 @@ __all__ = [
     "DatabaseManager",
     "get_database_manager",
     "QueryHelper",
+    "StateMachine",
+    "PipelinePhase",
+    "StateTransition",
+    "IterationController",
+    "IterationMetrics",
+    "ResultAccumulator",
+    "AccumulatedResult",
 ]
