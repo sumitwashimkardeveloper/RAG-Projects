@@ -16,6 +16,8 @@ from .query_helpers import QueryHelper
 from .state_machine import StateMachine, PipelinePhase, StateTransition
 from .iteration_controller import IterationController, IterationMetrics
 from .result_accumulator import ResultAccumulator, AccumulatedResult
+from .cache import Cache, QueryCache, EmbeddingCache, CachedFunction
+from .monitoring import MetricsCollector, QueryMetrics
 
 __all__ = [
     "get_logger",
@@ -49,4 +51,10 @@ __all__ = [
     "IterationMetrics",
     "ResultAccumulator",
     "AccumulatedResult",
+    "Cache",
+    "QueryCache",
+    "EmbeddingCache",
+    "CachedFunction",
+    "MetricsCollector",
+    "QueryMetrics",
 ]
